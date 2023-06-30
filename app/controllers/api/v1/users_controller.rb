@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
   # GET /api/v1/users
   # GET /api/v1/users.json
   def index
-    @api_v1_users = Api::V1::User.all
+    @api_v1_users = User.all
   end
 
   # GET /api/v1/users/1
@@ -15,10 +15,10 @@ class Api::V1::UsersController < ApplicationController
   # POST /api/v1/users
   # POST /api/v1/users.json
   def create
-    @api_v1_user = Api::V1::User.new(api_v1_user_params)
+    @api_v1_user = User.new(api_v1_user_params)
 
     if @api_v1_user.save
-      render :show, status: :created, location: @api_v1_user
+      render :show, status: :created
     else
       render json: @api_v1_user.errors, status: :unprocessable_entity
     end
@@ -28,7 +28,7 @@ class Api::V1::UsersController < ApplicationController
   # PATCH/PUT /api/v1/users/1.json
   def update
     if @api_v1_user.update(api_v1_user_params)
-      render :show, status: :ok, location: @api_v1_user
+      render :show, status: :ok
     else
       render json: @api_v1_user.errors, status: :unprocessable_entity
     end
@@ -43,11 +43,11 @@ class Api::V1::UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_api_v1_user
-      @api_v1_user = Api::V1::User.find(params[:id])
+      @api_v1_user = User.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def api_v1_user_params
-      params.require(:api_v1_user).permit(:name, :email, :password, :phone, :dob)
+      params.require(:user).permit(:name, :email, :password, :phone, :dob)
     end
 end
