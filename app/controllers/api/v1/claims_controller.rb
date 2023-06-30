@@ -48,6 +48,6 @@ class Api::V1::ClaimsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def api_v1_claim_params
-      params.require(:api_v1_claim).permit(:img_one, :img_two, :comment, :location, :user_id, :client_id, :category_id)
+      params.require(:api_v1_claim).permit(:img_one, :img_two, :comment, :location, :forwarded, :user_id, :client_id, :category_id)
     end
 end

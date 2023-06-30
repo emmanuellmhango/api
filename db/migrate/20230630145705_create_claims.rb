@@ -5,6 +5,7 @@ class CreateClaims < ActiveRecord::Migration[7.0]
       t.string :img_two
       t.string :comment
       t.string :location
+      t.string :forwarded
       t.references :user, null: false, foreign_key: true
       t.references :client, null: false, foreign_key: true
       t.references :category, null: false, foreign_key: true

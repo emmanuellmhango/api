@@ -5,6 +5,7 @@ one:
   img_two: MyString
   comment: MyString
   location: MyString
+  forwarded: MyString
   user: one
   client: one
   category: one
@@ -14,6 +15,7 @@ two:
   img_two: MyString
   comment: MyString
   location: MyString
+  forwarded: MyString
   user: two
   client: two
   category: two
