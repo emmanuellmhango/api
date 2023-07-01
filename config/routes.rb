@@ -10,5 +10,5 @@ Rails.application.routes.draw do
   put '/api/v1/users', to: 'users#create'
   # post '/api/v1/users', to: 'users#create'
   # Defines the root path route ("/")
-  # root "articles#index"
+  root "arrivals#index"
 end

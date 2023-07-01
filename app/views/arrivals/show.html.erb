@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @arrival %>
+
+<div>
+  <%= link_to "Edit this arrival", edit_arrival_path(@arrival) %> |
+  <%= link_to "Back to arrivals", arrivals_path %>
+
+  <%= button_to "Destroy this arrival", @arrival, method: :delete %>
+</div>
