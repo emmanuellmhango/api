@@ -3,6 +3,9 @@ class User < ApplicationRecord
   has_many :categories
   has_many :clients
   
-  validates :username, presence: true, uniqueness: true
+  validates :name, presence: true
+  validates :email, presence: true, uniqueness: true
   validates :password, presence: true, length: { minimum: 6 }
+  validates :phone, presence: true
+  validates :dob, presence: true
 end
