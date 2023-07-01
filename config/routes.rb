@@ -7,8 +7,5 @@ Rails.application.routes.draw do
       resources :clients
     end
   end
-  # post '/api/v1/users', to: 'users#create'
-  # post '/api/v1/users', to: 'users#create'
-  # Defines the root path route ("/")
   root "arrivals#index"
 end
