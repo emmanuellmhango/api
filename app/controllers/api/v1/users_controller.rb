@@ -4,7 +4,16 @@ class Api::V1::UsersController < ApplicationController
   # GET /api/v1/users
   # GET /api/v1/users.json
   def index
-    @api_v1_users = User.all
+    begin
+      @api_v1_users = User.find_by(email: params[:email], password: params[:password])
+      if @api_v1_users.present?
+        render json: { success: true, user: @api_v1_users }
+      else
+        render json: { success: false }
+      end
+    rescue StandardError => e
+      render json: { code: 201, message: e.message }, status: :unprocessable_entity
+    end
   end
 
   # GET /api/v1/users/1
