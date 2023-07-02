@@ -28,7 +28,6 @@ class Api::V1::UsersController < ApplicationController
 
     if @api_v1_user.save
       render json: { status: 'Registration is successful' }
-    end
     else
       render json: @api_v1_user.errors, status: :unprocessable_entity
     end
