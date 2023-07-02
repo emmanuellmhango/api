@@ -4,7 +4,7 @@ class Api::V1::ClaimsController < ApplicationController
   # GET /api/v1/claims
   # GET /api/v1/claims.json
   def index
-    @api_v1_claims = Api::V1::Claim.all
+    @api_v1_claims = Claim.all
   end
 
   # GET /api/v1/claims/1
@@ -15,10 +15,10 @@ class Api::V1::ClaimsController < ApplicationController
   # POST /api/v1/claims
   # POST /api/v1/claims.json
   def create
-    @api_v1_claim = Api::V1::Claim.new(api_v1_claim_params)
+    @api_v1_claim = Claim.new(api_v1_claim_params)
 
     if @api_v1_claim.save
-      render :show, status: :created, location: @api_v1_claim
+      render json: { status: 'Claim added successfully', code: 2201 }
     else
       render json: @api_v1_claim.errors, status: :unprocessable_entity
     end
@@ -43,11 +43,11 @@ class Api::V1::ClaimsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_api_v1_claim
-      @api_v1_claim = Api::V1::Claim.find(params[:id])
+      @api_v1_claim = Claim.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def api_v1_claim_params
-      params.require(:api_v1_claim).permit(:img_one, :img_two, :comment, :location, :forwarded, :user_id, :client_id, :category_id)
+      params.require(:claim).permit(:img_one, :img_two, :comment, :location, :forwarded, :user_id, :client_id, :category_id)
     end
 end
