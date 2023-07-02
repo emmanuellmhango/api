@@ -4,7 +4,16 @@ class Api::V1::ClaimsController < ApplicationController
   # GET /api/v1/claims
   # GET /api/v1/claims.json
   def index
-    @api_v1_claims = Claim.all
+    begin
+      @api_v1_claims = Claim.all
+      if @api_v1_claims.present?
+        render json: { success: true, user: @api_v1_claims }
+      else
+        render json: { success: false, error: "Claims available" }
+      end
+    rescue StandardError => e
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
+    end
   end
 
   # GET /api/v1/claims/1
