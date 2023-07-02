@@ -5,7 +5,8 @@ class Api::V1::UsersController < ApplicationController
   # GET /api/v1/users.json
   def index
     begin
-      @api_v1_users = User.find_by(email: params[:email], password: params[:password])
+      #@api_v1_users = User.find_by(email: params[:email], password: params[:password])
+      @api_v1_users = User.All
       if @api_v1_users.present?
         render json: { success: true, user: @api_v1_users }
       else
