@@ -9,7 +9,7 @@ class Api::V1::ClaimsController < ApplicationController
       if @api_v1_claims.present?
         render json: { success: true, user: @api_v1_claims }
       else
-        render json: { success: false, error: "Claims available" }
+        render json: { success: false, error: "No claims for this user" }
       end
     rescue StandardError => e
       render json: { code: 201, error: e.message }, status: :unprocessable_entity
