@@ -16,8 +16,7 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # GET ALL USERS
-
+  # GET api/v1/all_users
   def get_all_users
     begin
       @api_v1_users = User.all
