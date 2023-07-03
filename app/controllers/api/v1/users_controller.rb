@@ -16,6 +16,20 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  # GET ALL USERS
+
+  def get_all_users
+    begin
+      @api_v1_users = User.all
+      if @api_v1_users.present?
+        render json: { success: true, users: @api_v1_users }
+      else
+        render json: { success: false, error: "No users found." }
+      end
+    rescue StandardError => e
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
+    end
+  end
 
   # GET /api/v1/users/1
   # GET /api/v1/users/1.json
