@@ -4,7 +4,16 @@ class Api::V1::CategoriesController < ApplicationController
   # GET /api/v1/categories
   # GET /api/v1/categories.json
   def index
-    @api_v1_categories = Api::V1::Category.all
+    begin
+      @api_v1_categories = Category.all
+      if @api_v1_categories.present?
+        render json: { success: true, categories: @api_v1_categories }
+      else
+        render json: { success: false, error: "No categories found." }
+      end
+    rescue => exception
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
+    end
   end
 
   # GET /api/v1/categories/1
@@ -15,10 +24,11 @@ class Api::V1::CategoriesController < ApplicationController
   # POST /api/v1/categories
   # POST /api/v1/categories.json
   def create
-    @api_v1_category = Api::V1::Category.new(api_v1_category_params)
+    @api_v1_category = Category.new(api_v1_category_params)
 
     if @api_v1_category.save
-      render :show, status: :created, location: @api_v1_category
+      @categories = Category.all
+      render json: { success: true, categories: @categories }
     else
       render json: @api_v1_category.errors, status: :unprocessable_entity
     end
@@ -37,17 +47,21 @@ class Api::V1::CategoriesController < ApplicationController
   # DELETE /api/v1/categories/1
   # DELETE /api/v1/categories/1.json
   def destroy
-    @api_v1_category.destroy
+    if @api_v1_category.destroy
+      render json: { success: true }
+    else
+      render json: { success: false }, status: :unprocessable_entity
+    end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_api_v1_category
-      @api_v1_category = Api::V1::Category.find(params[:id])
+      @api_v1_category = Category.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def api_v1_category_params
-      params.require(:api_v1_category).permit(:name, :icon)
+      params.require(:category).permit(:name, :icon)
     end
 end

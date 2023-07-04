@@ -4,7 +4,7 @@ class Api::V1::ClientsController < ApplicationController
   # GET /api/v1/clients
   # GET /api/v1/clients.json
   def index
-    @api_v1_clients = Api::V1::Client.all
+    @api_v1_clients = Client.all
   end
 
   # GET /api/v1/clients/1
@@ -15,10 +15,10 @@ class Api::V1::ClientsController < ApplicationController
   # POST /api/v1/clients
   # POST /api/v1/clients.json
   def create
-    @api_v1_client = Api::V1::Client.new(api_v1_client_params)
+    @api_v1_client = Client.new(api_v1_client_params)
 
     if @api_v1_client.save
-      render :show, status: :created, location: @api_v1_client
+      render :show, status: :created
     else
       render json: @api_v1_client.errors, status: :unprocessable_entity
     end
@@ -43,11 +43,11 @@ class Api::V1::ClientsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_api_v1_client
-      @api_v1_client = Api::V1::Client.find(params[:id])
+      @api_v1_client = Client.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def api_v1_client_params
-      params.require(:api_v1_client).permit(:name, :icon, :email, :phone)
+      params.require(:client).permit(:name, :icon, :email, :phone)
     end
 end
