@@ -17,6 +17,8 @@ gem "puma", "~> 5.0"
 
 gem 'rack-cors', require: 'rack/cors'
 
+gem 'active_model_serializers'
+
 # Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
 gem "importmap-rails"
 
@@ -72,3 +74,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem "jsonapi-serializer", "~> 2.2"

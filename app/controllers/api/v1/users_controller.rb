@@ -60,7 +60,11 @@ class Api::V1::UsersController < ApplicationController
   # DELETE /api/v1/users/1
   # DELETE /api/v1/users/1.json
   def destroy
-    @api_v1_user.destroy
+    if @api_v1_user.destroy
+      render json: { success: true }
+    else
+      render json: { success: false }, status: :unprocessable_entity
+    end
   end
 
   private
