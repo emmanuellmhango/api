@@ -1,7 +1,7 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.routes.default_url_options = {
-  host: 'https://api-production-3jvx.onrender.com'
+  host: 'https://api-production-i5sf.onrender.com'
 }
 
 Rails.application.configure do
