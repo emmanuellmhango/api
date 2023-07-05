@@ -25,13 +25,20 @@ class Api::V1::ClaimsController < ApplicationController
   # POST /api/v1/claims.json
   def create
     @api_v1_claim = Claim.new(api_v1_claim_params)
+    img_one = params[:claim][:img_one]
+    img_two = params[:claim][:img_two]
+
+    @api_v1_claim.img_one.attach(img_one) if img_one.present?
+    @api_v1_claim.img_two.attach(img_two) if img_two.present?
 
     if @api_v1_claim.save
-      render json: { status: 'Claim added successfully', code: 2201 }
+      updated_claims = Claim.where(user_id: @api_v1_claim.user_id)
+      render json: { success: true, status: 'Claim added successfully', code: 2201, claims: updated_claims }
     else
       render json: @api_v1_claim.errors, status: :unprocessable_entity
     end
   end
+
 
   # PATCH/PUT /api/v1/claims/1
   # PATCH/PUT /api/v1/claims/1.json

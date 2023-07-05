@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_07_04_134402) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_05_191221) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,8 +56,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_04_134402) do
   end
 
   create_table "claims", force: :cascade do |t|
-    t.string "img_one"
-    t.string "img_two"
     t.string "comment"
     t.string "location"
     t.string "forwarded"
