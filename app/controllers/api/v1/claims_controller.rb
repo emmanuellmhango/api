@@ -16,6 +16,19 @@ class Api::V1::ClaimsController < ApplicationController
     end
   end
 
+  def index_for_mobile
+    begin
+      @api_v1_claims = Claim.where(user_id: params[:user_id])
+      if @api_v1_claims.present?
+        render json: { success: true, claims: @api_v1_claims }
+      else
+        render json: { success: false, error: "No claims for this user" }
+      end
+    rescue StandardError => e
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
+    end
+  end
+
   # GET /api/v1/claims/1
   # GET /api/v1/claims/1.json
   def show
