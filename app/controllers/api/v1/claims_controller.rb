@@ -38,7 +38,7 @@ class Api::V1::ClaimsController < ApplicationController
   # POST /api/v1/claims.json
   def create
     @api_v1_claim = Claim.new(api_v1_claim_params)
-
+    @api_v1_claim.images.attach(params[:images])
     if @api_v1_claim.save
       updated_claims = Claim.where(user_id: @api_v1_claim.user_id)
       render json: { success: true, claims: updated_claims, code: 2201 }
