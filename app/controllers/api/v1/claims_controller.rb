@@ -5,7 +5,6 @@ class Api::V1::ClaimsController < ApplicationController
   # GET /api/v1/claims.json
   def index
     begin
-      # @api_v1_claims = Claim.where(user_id: params[:user_id])
       @api_v1_claims = Claim.all
       if @api_v1_claims.present?
         render json: {success: true, claims: ClaimSerializer.new(@api_v1_claims).serializable_hash[:data].map{|hash| hash[:attributes]}}
@@ -19,7 +18,7 @@ class Api::V1::ClaimsController < ApplicationController
 
   def index_for_mobile
     begin
-      @api_v1_claims = Claim.where(user_id: 1)
+      @api_v1_claims = Claim.where(user_id: params[:user_id])
       if @api_v1_claims.present?
         render json: { success: true, claims: ClaimSerializer.new(@api_v1_claims).serializable_hash[:data].map { |hash| hash[:attributes] }, code: 2201 }
       else
