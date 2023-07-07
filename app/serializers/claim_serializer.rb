@@ -2,9 +2,9 @@ class ClaimSerializer < ActiveModel::Serializer
   include JSONAPI::Serializer
   attributes :id, :location, :comment, :forwarded, :category_id, :user_id, :client_id, :created_at, :images, :image_urls
 
-  belongs_to :user
-  belongs_to :client
-  belongs_to :category
+  belongs_to :user, serializer: UserSerializer
+  belongs_to :client, serializer: ClientSerializer
+  belongs_to :category, serializer: CategorySerializer
 
   def image_urls
     if object.images.attached?
