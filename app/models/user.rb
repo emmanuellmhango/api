@@ -1,7 +1,5 @@
 class User < ApplicationRecord
   has_many :claims
-  has_many :categories
-  has_many :clients
   
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true

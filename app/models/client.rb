@@ -1,4 +1,5 @@
 class Client < ApplicationRecord
+  has_many :claims
   has_one_attached :icon
 
   def icon_url   
