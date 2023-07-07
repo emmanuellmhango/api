@@ -7,7 +7,7 @@ class Api::V1::ClaimsController < ApplicationController
     begin
       @api_v1_claims = Claim.all
       if @api_v1_claims.present?
-        render json: {success: true, claims: ClaimSerializer.new(@api_v1_claims).serializable_hash[:data].map{|hash| hash[:attributes]}}
+        render json: {success: true, claims: @api_v1_claims}
       else
         render json: { success: false, error: "No claims for this user" }
       end
