@@ -5,7 +5,7 @@ class Api::V1::ClaimsController < ApplicationController
   # GET /api/v1/claims.json
   def index
     begin
-      @api_v1_claims = Claim.all
+      @api_v1_claims = Claim.includes(:user, :client, :category).all
       if @api_v1_claims.present?
         render json: {success: true, claims: @api_v1_claims}
       else
