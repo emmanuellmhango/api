@@ -5,16 +5,16 @@ class Claim < ApplicationRecord
 
   has_many_attached :images
 
-  def image_urls
-    object.images.attached? ? object.images.map { |image| url_for(image) } : []
-  end
-
   # def image_urls
-  #   if images.attached?
-  #     images.map do |image|
-  #       Rails.application.routes.url_helpers.url_for(image, only_path: true)
-  #     end
-  #   end
+  #   object.images.attached? ? object.images.map { |image| url_for(image) } : []
   # end
+
+  def image_urls
+    if images.attached?
+      images.map do |image|
+        Rails.application.routes.url_helpers.url_for(image, only_path: true)
+      end
+    end
+  end
 
 end
