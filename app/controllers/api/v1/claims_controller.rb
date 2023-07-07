@@ -21,7 +21,7 @@ class Api::V1::ClaimsController < ApplicationController
     begin
       @api_v1_claims = Claim.where(user_id: params[:user_id])
       if @api_v1_claims.present?
-        render json: { success: true, claims: @api_v1_claims }
+        render json: { success: true, claims: ClaimSerializer.new(@api_v1_claims).serializable_hash[:data].map { |hash| hash[:attributes] }, code: 2201 }
       else
         render json: { success: false, error: "No claims for this user" }
       end
@@ -42,7 +42,7 @@ class Api::V1::ClaimsController < ApplicationController
 
     if @api_v1_claim.save
       updated_claims = Claim.where(user_id: @api_v1_claim.user_id)
-      render json: { success: true, claims: updated_claims, code: 2201 }
+      render json: { success: true, claims: ClaimSerializer.new(updated_claims).serializable_hash[:data].map { |hash| hash[:attributes] }, code: 2201 }
     else
       render json: @api_v1_claim.errors, status: :unprocessable_entity
     end
