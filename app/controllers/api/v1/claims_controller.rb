@@ -52,7 +52,7 @@ end
   # PATCH/PUT /api/v1/claims/1
   # PATCH/PUT /api/v1/claims/1.json
   def update
-    @api_v1_claim = Claim.find(params[:claim_id])
+    @api_v1_claim = Claim.find(params[:id])
 
     if @api_v1_claim.update(forwarded: params[:forwarded])
       render json: { success: true }
