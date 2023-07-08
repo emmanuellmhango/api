@@ -4,17 +4,18 @@ class Api::V1::ClaimsController < ApplicationController
   # GET /api/v1/claims
   # GET /api/v1/claims.json
   def index
-    begin
-      @api_v1_claims = Claim.joins(:user, :client, :category)
-      if @api_v1_claims.present?
-        render json: {success: true, claims: @api_v1_claims}
-      else
-        render json: { success: false, error: "No claims for this user" }
-      end
-    rescue StandardError => e
-      render json: { code: 201, error: e.message }, status: :unprocessable_entity
+  begin
+    @api_v1_claims = Claim.includes(:client, :category).select(:id, :client_id, :category_id)
+    if @api_v1_claims.present?
+      render json: { success: true, claims: @api_v1_claims.as_json(include: { client: { only: :client_name }, category: { only: :category_name } }) }
+    else
+      render json: { success: false, error: "No claims for this user" }
     end
+  rescue StandardError => e
+    render json: { code: 201, error: e.message }, status: :unprocessable_entity
   end
+end
+
 
   def index_for_mobile
     begin
