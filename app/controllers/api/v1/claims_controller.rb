@@ -52,8 +52,10 @@ end
   # PATCH/PUT /api/v1/claims/1
   # PATCH/PUT /api/v1/claims/1.json
   def update
-    if @api_v1_claim.update(api_v1_claim_params)
-      render json: {success: true}
+    @api_v1_claim = Claim.find(params[:claim_id])
+
+    if @api_v1_claim.update(forwarded: params[:forwarded])
+      render json: { success: true }
     else
       render json: @api_v1_claim.errors, status: :unprocessable_entity
     end
