@@ -53,7 +53,7 @@ end
   # PATCH/PUT /api/v1/claims/1.json
   def update
     if @api_v1_claim.update(api_v1_claim_params)
-      render :show, status: :ok, location: @api_v1_claim
+      render json: {success: true}
     else
       render json: @api_v1_claim.errors, status: :unprocessable_entity
     end
