@@ -39,7 +39,7 @@ class Api::V1::UserManagementsController < ApplicationController
   # PATCH/PUT /api/v1/user_managements/1.json
   def update
     if @api_v1_user_management.update(api_v1_user_management_params)
-      render :show, status: :ok, location: @api_v1_user_management
+      render json: {success: true}
     else
       render json: @api_v1_user_management.errors, status: :unprocessable_entity
     end
@@ -54,11 +54,11 @@ class Api::V1::UserManagementsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_api_v1_user_management
-      @api_v1_user_management = Api::V1::UserManagement.find(params[:id])
+      @api_v1_user_management = UserManagement.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def api_v1_user_management_params
-      params.require(:api_v1_user_management).permit(:company_name, :username, :email, :phone, :social_link, :package)
+      params.require(:user_management).permit(:company_name, :username, :email, :phone, :social_link, :package)
     end
 end
