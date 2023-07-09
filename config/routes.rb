@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  namespace :api do
+    namespace :v1 do
+      resources :user_managements
+    end
+  end
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       get '/all_users', to: 'users#get_all_users'
