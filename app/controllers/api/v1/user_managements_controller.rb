@@ -7,7 +7,7 @@ class Api::V1::UserManagementsController < ApplicationController
     begin
       @api_v1_user_managements = UserManagement.all
 
-      if @api_v1_user_managements?.present
+      if @api_v1_user_managements.present?
         render json: { success: true, userClients: @api_v1_user_managements }
       else
         render json: { success: false, error: "Clients Users" }
