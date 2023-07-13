@@ -13,8 +13,8 @@ class Api::V1::ClaimsController < ApplicationController
       end
     rescue StandardError => e
       render json: { code: 201, error: e.message }, status: :unprocessable_entity
+    end
   end
-end
 
 
   def index_for_mobile
@@ -38,7 +38,7 @@ end
   # POST /api/v1/claims
   # POST /api/v1/claims.json
   def create
-    @api_v1_claim = Claim.new(api_v1_claim_params)
+    @api_v1_claim = Api::V1::Claim.new(api_v1_claim_params)
 
     if @api_v1_claim.save
       updated_claims = Claim.where(user_id: @api_v1_claim.user_id)
@@ -72,6 +72,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def api_v1_claim_params
-      params.require(:claim).permit(:comment, :location, :forwarded, :category, :user_id, :category_id, images: [])
+      params.require(:claim).permit(:comment, :location, :forwarded, :user_id, :category_id, images: [])
     end
 end
