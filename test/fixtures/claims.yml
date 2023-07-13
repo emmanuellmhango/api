@@ -6,6 +6,7 @@ one:
   forwarded: MyString
   category: MyString
   user: one
+  category: one
 
 two:
   comment: MyString
@@ -13,3 +14,4 @@ two:
   forwarded: MyString
   category: MyString
   user: two
+  category: two
