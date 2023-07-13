@@ -1,21 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  img_one: MyString
-  img_two: MyString
   comment: MyString
   location: MyString
   forwarded: MyString
+  category: MyString
   user: one
-  client: one
-  category: one
 
 two:
-  img_one: MyString
-  img_two: MyString
   comment: MyString
   location: MyString
   forwarded: MyString
+  category: MyString
   user: two
-  client: two
-  category: two

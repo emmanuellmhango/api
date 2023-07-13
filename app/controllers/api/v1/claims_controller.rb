@@ -4,19 +4,19 @@ class Api::V1::ClaimsController < ApplicationController
   # GET /api/v1/claims
   # GET /api/v1/claims.json
   def index
-  begin
-    @api_v1_claims = Claim.includes(:client, :category).all
-    if @api_v1_claims.present?
-      render json: { success: true, claims: @api_v1_claims.as_json(include: { client: { only: :name }, category: { only: :name } }) }
-    else
-      render json: { success: false, error: "No claims for this user" }
+    begin
+      @api_v1_claims = Claim.includes(:user).all
+      if @api_v1_claims.present?
+        render json: { success: true, claims: @api_v1_claims.as_json(include: { user: { only: :name } }) }
+      else
+        render json: { success: false, error: "No claims for this user" }
+      end
+    rescue StandardError => e
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
-  rescue StandardError => e
-    render json: { code: 201, error: e.message }, status: :unprocessable_entity
   end
-end
 
-
+  
   def index_for_mobile
     begin
       @api_v1_claims = Claim.where(user_id: params[:user_id])
@@ -48,14 +48,11 @@ end
     end
   end
 
-
   # PATCH/PUT /api/v1/claims/1
   # PATCH/PUT /api/v1/claims/1.json
   def update
-    @api_v1_claim = Claim.find(params[:id])
-
-    if @api_v1_claim.update(forwarded: params[:forwarded])
-      render json: { success: true }
+    if @api_v1_claim.update(api_v1_claim_params)
+      render :show, status: :ok, location: @api_v1_claim
     else
       render json: @api_v1_claim.errors, status: :unprocessable_entity
     end
@@ -70,11 +67,11 @@ end
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_api_v1_claim
-      @api_v1_claim = Claim.find(params[:id])
+      @api_v1_claim = Api::V1::Claim.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def api_v1_claim_params
-      params.require(:claim).permit(:comment, :location, :forwarded, :user_id, :client_id, :category_id, images: [])
+      params.require(:claim).permit(:comment, :location, :forwarded, :category, :user_id, images: [])
     end
 end
