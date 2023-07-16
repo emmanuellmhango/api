@@ -30,10 +30,11 @@ class Api::V1::ClaimsController < ApplicationController
       render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
   end
-
+  
+  # GET /api/v1/claims_for_mobile Individual results for the user
   def index_for_mobile
     begin
-      @api_v1_claims = Claim.includes(:category, :images).where(user_id: params[:user_id])
+      @api_v1_claims = Claim.includes(:category).where(user_id: params[:user_id]).with_attached_images.all
       if @api_v1_claims.present?
         claims_with_images = @api_v1_claims.map do |claim|
           {
