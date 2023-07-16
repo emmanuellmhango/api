@@ -5,7 +5,7 @@ class Api::V1::ClaimsController < ApplicationController
   # GET /api/v1/claims.json
 def index
   begin
-    @api_v1_claims = Claim.includes(:category, :images).all
+    @api_v1_claims = Claim.includes(:category).with_attached_images.all
     if @api_v1_claims.present?
       claims_with_images = @api_v1_claims.as_json(include: {
         category: { only: :name },
@@ -24,6 +24,7 @@ def index
     render json: { code: 201, error: e.message }, status: :unprocessable_entity
   end
 end
+
 
 
 
