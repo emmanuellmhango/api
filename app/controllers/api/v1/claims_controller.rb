@@ -3,45 +3,54 @@ class Api::V1::ClaimsController < ApplicationController
 
   # GET /api/v1/claims
   # GET /api/v1/claims.json
-def index
-  begin
-    @api_v1_claims = Claim.includes(:category).with_attached_images.all
-    if @api_v1_claims.present?
-      claims_with_images = @api_v1_claims.map do |claim|
-        {
-          id: claim.id,
-          comment: claim.comment,
-          location: claim.location,
-          forwarded: claim.forwarded,
-          user_id: claim.user_id,
-          category_id: claim.category_id,
-          created_at: claim.created_at,
-          updated_at: claim.updated_at,
-          category: claim.category.as_json(only: :name),
-          images: claim.images.attached? ? claim.images.map { |image| url_for(image) } : []
-        }
+  def index
+    begin
+      @api_v1_claims = Claim.includes(:category).with_attached_images.all
+      if @api_v1_claims.present?
+        claims_with_images = @api_v1_claims.map do |claim|
+          {
+            id: claim.id,
+            comment: claim.comment,
+            location: claim.location,
+            forwarded: claim.forwarded,
+            user_id: claim.user_id,
+            category_id: claim.category_id,
+            created_at: claim.created_at,
+            updated_at: claim.updated_at,
+            category: claim.category.as_json(only: :name),
+            images: claim.images.attached? ? claim.images.map { |image| url_for(image) } : []
+          }
+        end
+
+        render json: { success: true, claims: claims_with_images }
+      else
+        render json: { success: false, error: "No claims for this user" }
       end
-
-      render json: { success: true, claims: claims_with_images }
-    else
-      render json: { success: false, error: "No claims for this user" }
+    rescue StandardError => e
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
-  rescue StandardError => e
-    render json: { code: 201, error: e.message }, status: :unprocessable_entity
   end
-end
-
-
 
   def index_for_mobile
     begin
-      @api_v1_claims = Claim.where(user_id: params[:user_id])
+      @api_v1_claims = Claim.includes(:category, :images).where(user_id: params[:user_id])
       if @api_v1_claims.present?
-        render json: { success: true, claims: @api_v1_claims.as_json(include: :images).merge(
-          images: @api_v1_claims.images.map do |image|
-            url_for(image)
-          end
-        ) }
+        claims_with_images = @api_v1_claims.map do |claim|
+          {
+            id: claim.id,
+            comment: claim.comment,
+            location: claim.location,
+            forwarded: claim.forwarded,
+            user_id: claim.user_id,
+            category_id: claim.category_id,
+            created_at: claim.created_at,
+            updated_at: claim.updated_at,
+            category: claim.category.as_json(only: :name),
+            images: claim.images.attached? ? claim.images.map { |image| url_for(image) } : []
+          }
+        end
+
+        render json: { success: true, claims: claims_with_images }
       else
         render json: { success: false, error: "No claims for this user" }
       end
