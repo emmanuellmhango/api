@@ -3,27 +3,28 @@ class Api::V1::ClaimsController < ApplicationController
 
   # GET /api/v1/claims
   # GET /api/v1/claims.json
-  def index
-    begin
-      @api_v1_claims = Claim.includes(:category, :images).all
-      if @api_v1_claims.present?
-        claims_with_images = @api_v1_claims.as_json(include: {
-          category: { only: :name },
-          images: { only: :url }
-        })
+def index
+  begin
+    @api_v1_claims = Claim.includes(:category, :images).all
+    if @api_v1_claims.present?
+      claims_with_images = @api_v1_claims.as_json(include: {
+        category: { only: :name },
+        images: { only: :url }
+      })
 
-        claims_with_images["claims"].each do |claim|
-          claim["images"] = claim["images"].map { |image| url_for(image) }
-        end
-
-        render json: { success: true, claims: claims_with_images }
-      else
-        render json: { success: false, error: "No claims for this user" }
+      claims_with_images.each do |claim|
+        claim["images"] = claim["images"].map { |image| url_for(image) }
       end
-    rescue StandardError => e
-      render json: { code: 201, error: e.message }, status: :unprocessable_entity
+
+      render json: { success: true, claims: claims_with_images }
+    else
+      render json: { success: false, error: "No claims for this user" }
     end
+  rescue StandardError => e
+    render json: { code: 201, error: e.message }, status: :unprocessable_entity
   end
+end
+
 
 
 
