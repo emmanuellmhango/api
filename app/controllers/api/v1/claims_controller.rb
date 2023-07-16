@@ -21,7 +21,11 @@ class Api::V1::ClaimsController < ApplicationController
     begin
       @api_v1_claims = Claim.where(user_id: params[:user_id])
       if @api_v1_claims.present?
-        render json: { success: true, claims: ClaimSerializer.new(@api_v1_claims).serializable_hash[:data].map { |hash| hash[:attributes] }, code: 2201 }
+        render json: { success: true, claims: @api_v1_claims.as_json(include: :images).merge(
+          images: @api_v1_claims.images.map do |image|
+            url_for(image)
+          end
+        ) }
       else
         render json: { success: false, error: "No claims for this user" }
       end
@@ -38,11 +42,23 @@ class Api::V1::ClaimsController < ApplicationController
   # POST /api/v1/claims
   # POST /api/v1/claims.json
   def create
-    @api_v1_claim = Claim.new(api_v1_claim_params)
+    @api_v1_claim = Claim.new(api_v1_claim_params.except(:images))
+
+    images = params[:claim][:images]
+
+    if images
+      images.each do |image|
+        @api_v1_claim.images.attach(image)
+      end
+    end
 
     if @api_v1_claim.save
       updated_claims = Claim.where(user_id: @api_v1_claim.user_id)
-      render json: { success: true, claims: ClaimSerializer.new(updated_claims).serializable_hash[:data].map { |hash| hash[:attributes] }, code: 2201 }
+      render json: { success: true, claims: updated_claims.as_json(include: :images).merge(
+          images: updated_claims.images.map do |image|
+            url_for(image)
+          end
+        ) }
     else
       render json: @api_v1_claim.errors, status: :unprocessable_entity
     end
