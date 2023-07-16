@@ -7,7 +7,7 @@ class Api::V1::ClaimsController < ApplicationController
     begin
       @api_v1_claims = Claim.includes(:category).all
       if @api_v1_claims.present?
-        render json: { success: true, claims: @api_v1_claims.as_json(include: { client: { only: :name }, category: { only: :name } }) }
+        render json: { success: true, claims: @api_v1_claims.as_json(include: { category: { only: :name } }) }
       else
         render json: { success: false, error: "No claims for this user" }
       end
