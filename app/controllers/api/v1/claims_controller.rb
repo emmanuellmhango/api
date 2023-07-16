@@ -5,15 +5,17 @@ class Api::V1::ClaimsController < ApplicationController
   # GET /api/v1/claims.json
 def index
   begin
-    @api_v1_claims = Claim.includes(:category).with_attached_images.all
+    @api_v1_claims = Claim.includes(:category, :images).all
     if @api_v1_claims.present?
       claims_with_images = @api_v1_claims.as_json(include: {
         category: { only: :name },
-        images: { only: :url }
+        images: { only: [] }
       })
 
       claims_with_images.each do |claim|
-        claim["images"] = claim["images"].map { |image| url_for(image) }
+        claim["images"] = claim["images"].map do |image|
+          url_for(image.service_url)
+        end
       end
 
       render json: { success: true, claims: claims_with_images }
@@ -24,9 +26,6 @@ def index
     render json: { code: 201, error: e.message }, status: :unprocessable_entity
   end
 end
-
-
-
 
 
   def index_for_mobile
