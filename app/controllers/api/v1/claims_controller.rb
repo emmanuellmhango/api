@@ -78,16 +78,28 @@ class Api::V1::ClaimsController < ApplicationController
     end
 
     if @api_v1_claim.save
-      updated_claims = Claim.where(user_id: @api_v1_claim.user_id)
-      render json: { success: true, claims: updated_claims.as_json(include: :images).merge(
-          images: updated_claims.images.map do |image|
-            url_for(image)
-          end
-        ) }
+      updated_claims = Claim.includes(:images).where(user_id: @api_v1_claim.user_id)
+      claims_with_images = updated_claims.map do |claim|
+        {
+          id: claim.id,
+          comment: claim.comment,
+          location: claim.location,
+          forwarded: claim.forwarded,
+          user_id: claim.user_id,
+          category_id: claim.category_id,
+          created_at: claim.created_at,
+          updated_at: claim.updated_at,
+          category: claim.category.as_json(only: :name),
+          images: claim.images.attached? ? claim.images.map { |image| url_for(image) } : []
+        }
+      end
+
+      render json: { success: true, claims: claims_with_images }
     else
       render json: @api_v1_claim.errors, status: :unprocessable_entity
     end
   end
+
 
   # PATCH/PUT /api/v1/claims/1
   # PATCH/PUT /api/v1/claims/1.json
