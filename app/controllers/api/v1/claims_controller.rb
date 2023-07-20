@@ -17,6 +17,7 @@ class Api::V1::ClaimsController < ApplicationController
             category_id: claim.category_id,
             created_at: claim.created_at,
             updated_at: claim.updated_at,
+            geocode: claim.geocode,
             category: claim.category.as_json(only: :name),
             images: claim.images.attached? ? claim.images.map { |image| url_for(image) } : []
           }
@@ -46,6 +47,7 @@ class Api::V1::ClaimsController < ApplicationController
             category_id: claim.category_id,
             created_at: claim.created_at,
             updated_at: claim.updated_at,
+            geocode: claim.geocode,
             category: claim.category.as_json(only: :name),
             images: claim.images.attached? ? claim.images.map { |image| url_for(image) } : []
           }
@@ -110,6 +112,6 @@ class Api::V1::ClaimsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def api_v1_claim_params
-      params.require(:claim).permit(:comment, :location, :forwarded, :user_id, :category_id, images: [])
+      params.require(:claim).permit(:comment, :location, :forwarded, :user_id, :category_id, :geocode, images: [])
     end
 end
