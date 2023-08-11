@@ -28,6 +28,21 @@ class Api::V1::UsersController < ApplicationController
     rescue StandardError => e
       render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
+  end  
+  
+  # GET api/v1/system_users
+  def system_users
+    begin
+      @api_v1_users = User.where(role: ["basicadmin", "superadmin"])
+      
+      if @api_v1_users.present?
+        render json: { success: true, users: @api_v1_users }
+      else
+        render json: { success: false, error: "No users found." }
+      end
+    rescue StandardError => e
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
+    end
   end
 
   # GET /api/v1/users/1
