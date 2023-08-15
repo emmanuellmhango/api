@@ -22,9 +22,11 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   # GET /api/v1/category_client_email
+  # GET /api/v1/category_client_email
   def category_client_email
     begin
-      @cat_details = Category.includes(:user_management).where(name: params[:category_name])
+      @cat_details = Category.includes(:user_managements).find_by(name: params[:category_name])
+      
       if @cat_details.present?
         render json: { success: true, details: @cat_details }
       else
@@ -34,6 +36,7 @@ class Api::V1::CategoriesController < ApplicationController
       render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
   end
+
 
   # POST /api/v1/categories
   # POST /api/v1/categories.json
