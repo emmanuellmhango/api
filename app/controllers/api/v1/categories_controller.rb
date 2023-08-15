@@ -11,7 +11,7 @@ class Api::V1::CategoriesController < ApplicationController
       else
         render json: { success: false, error: "No categories found." }
       end
-    rescue => exception
+    rescue => e
       render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
   end
@@ -30,7 +30,7 @@ class Api::V1::CategoriesController < ApplicationController
       else
         render json: { success: false, error: "No categories found." }
       end
-    rescue => exception
+    rescue => e
       render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
   end
