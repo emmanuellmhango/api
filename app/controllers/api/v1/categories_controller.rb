@@ -21,6 +21,20 @@ class Api::V1::CategoriesController < ApplicationController
   def show
   end
 
+  # GET /api/v1/category_client_email
+  def category_client_email
+    begin
+      @cat_details = Category.includes(:user_management).where(name: params[:category_name])
+      if @cat_details.present?
+        render json: { success: true, details: @cat_details }
+      else
+        render json: { success: false, error: "No categories found." }
+      end
+    rescue => exception
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
+    end
+  end
+
   # POST /api/v1/categories
   # POST /api/v1/categories.json
   def create
