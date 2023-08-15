@@ -25,9 +25,9 @@ class Api::V1::CategoriesController < ApplicationController
   def category_client_email
     begin
       @cat_details = Category.includes(:user_management).find_by(name: params[:category_name])
-      
+
       if @cat_details.present?
-        render json: { success: true, details: @cat_details }
+        render json: { success: true, details: @cat_details.as_json(include: :user_management) }
       else
         render json: { success: false, error: "No categories found." }
       end
