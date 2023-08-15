@@ -1,4 +1,4 @@
 class Category < ApplicationRecord
   has_many :claims
-  has_one :user_managements
+  belongs_to :user_management
 end

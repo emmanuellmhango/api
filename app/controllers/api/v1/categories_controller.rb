@@ -22,10 +22,9 @@ class Api::V1::CategoriesController < ApplicationController
   end
 
   # GET /api/v1/category_client_email
-  # GET /api/v1/category_client_email
   def category_client_email
     begin
-      @cat_details = Category.includes(:user_managements).find_by(name: params[:category_name])
+      @cat_details = Category.includes(:user_management).find_by(name: params[:category_name])
       
       if @cat_details.present?
         render json: { success: true, details: @cat_details }
