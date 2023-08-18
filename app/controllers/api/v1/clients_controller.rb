@@ -65,4 +65,4 @@ class Api::V1::ClientsController < ApplicationController
     def api_v1_client_params
       params.require(:client).permit(:name, :email, :phone, :icon)
     end
-  end
+end

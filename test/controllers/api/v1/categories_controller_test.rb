@@ -12,7 +12,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create api_v1_category" do
     assert_difference("Api::V1::Category.count") do
-      post api_v1_categories_url, params: { api_v1_category: { icon: @api_v1_category.icon, name: @api_v1_category.name } }, as: :json
+      post api_v1_categories_url, params: { api_v1_category: { icon: @api_v1_category.icon, name: @api_v1_category.name, user_management_id: @api_v1_category.user_management_id } }, as: :json
     end
 
     assert_response :created
@@ -24,7 +24,7 @@ class Api::V1::CategoriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update api_v1_category" do
-    patch api_v1_category_url(@api_v1_category), params: { api_v1_category: { icon: @api_v1_category.icon, name: @api_v1_category.name } }, as: :json
+    patch api_v1_category_url(@api_v1_category), params: { api_v1_category: { icon: @api_v1_category.icon, name: @api_v1_category.name, user_management_id: @api_v1_category.user_management_id } }, as: :json
     assert_response :success
   end
 

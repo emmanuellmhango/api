@@ -1,7 +1,7 @@
 class Api::V1::CategoriesController < ApplicationController
   before_action :set_api_v1_category, only: %i[ show update destroy ]
 
-  # GET /api/v1/categories
+   # GET /api/v1/categories
   # GET /api/v1/categories.json
   def index
     begin

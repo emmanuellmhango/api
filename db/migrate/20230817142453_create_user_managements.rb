@@ -4,6 +4,7 @@ class CreateUserManagements < ActiveRecord::Migration[7.0]
       t.string :company_name
       t.string :username
       t.string :email
+      t.string :password
       t.string :phone
       t.string :social_link
       t.string :package

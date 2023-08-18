@@ -3,7 +3,9 @@
 one:
   name: MyString
   icon: MyString
+  user_management: one
 
 two:
   name: MyString
   icon: MyString
+  user_management: two

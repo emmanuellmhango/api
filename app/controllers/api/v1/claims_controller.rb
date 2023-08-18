@@ -1,7 +1,7 @@
 class Api::V1::ClaimsController < ApplicationController
   before_action :set_api_v1_claim, only: %i[ show update destroy ]
 
-  # GET /api/v1/claims
+ # GET /api/v1/claims
   # GET /api/v1/claims.json
   def index
     begin

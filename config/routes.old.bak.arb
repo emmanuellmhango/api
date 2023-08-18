@@ -2,7 +2,6 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :claims
-      resources :categories
       resources :user_managements
     end
   end
@@ -13,6 +12,7 @@ Rails.application.routes.draw do
       get '/system_users', to: 'users#system_users'
       get '/category_client_email', to: 'categories#category_client_email'
       resources :users
+      resources :categories
       resources :clients
     end
   end

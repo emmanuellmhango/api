@@ -12,7 +12,7 @@ class Api::V1::ClaimsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create api_v1_claim" do
     assert_difference("Api::V1::Claim.count") do
-      post api_v1_claims_url, params: { api_v1_claim: { category_id: @api_v1_claim.category_id, comment: @api_v1_claim.comment, forwarded: @api_v1_claim.forwarded, location: @api_v1_claim.location, user_id: @api_v1_claim.user_id } }, as: :json
+      post api_v1_claims_url, params: { api_v1_claim: { category_id: @api_v1_claim.category_id, comment: @api_v1_claim.comment, forwarded: @api_v1_claim.forwarded, geocode: @api_v1_claim.geocode, location: @api_v1_claim.location, user_id: @api_v1_claim.user_id } }, as: :json
     end
 
     assert_response :created
@@ -24,7 +24,7 @@ class Api::V1::ClaimsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update api_v1_claim" do
-    patch api_v1_claim_url(@api_v1_claim), params: { api_v1_claim: { category_id: @api_v1_claim.category_id, comment: @api_v1_claim.comment, forwarded: @api_v1_claim.forwarded, location: @api_v1_claim.location, user_id: @api_v1_claim.user_id } }, as: :json
+    patch api_v1_claim_url(@api_v1_claim), params: { api_v1_claim: { category_id: @api_v1_claim.category_id, comment: @api_v1_claim.comment, forwarded: @api_v1_claim.forwarded, geocode: @api_v1_claim.geocode, location: @api_v1_claim.location, user_id: @api_v1_claim.user_id } }, as: :json
     assert_response :success
   end
 

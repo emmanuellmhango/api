@@ -4,6 +4,7 @@ one:
   comment: MyString
   location: MyString
   forwarded: MyString
+  geocode: MyString
   user: one
   category: one
 
@@ -11,5 +12,6 @@ two:
   comment: MyString
   location: MyString
   forwarded: MyString
+  geocode: MyString
   user: two
   category: two

@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_api_v1_user, only: %i[ show update destroy ]
-  
-  # GET /api/v1/users
+
+    # GET /api/v1/users
   # GET /api/v1/users.json
   def index
     begin
