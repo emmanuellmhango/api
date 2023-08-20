@@ -63,6 +63,6 @@ class Api::V1::UserManagementsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def api_v1_user_management_params
-      params.require(:user_management).permit(:company_name, :username, :email, :phone, :social_link, :package)
+      params.require(:user_management).permit(:company_name, :username, :email, :phone, :password, :social_link, :package)
     end
 end
