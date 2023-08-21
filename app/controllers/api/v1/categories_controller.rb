@@ -12,7 +12,7 @@ class Api::V1::CategoriesController < ApplicationController
             id: category.id,
             name: category.name,
             user_management_id: category.user_management_id,
-            icon_url: category.icon.attached? ? url_for(category.icon) : nil
+            icon: category.icon.attached? ? url_for(category.icon) : nil
           }
         end
 
@@ -49,16 +49,22 @@ class Api::V1::CategoriesController < ApplicationController
   # POST /api/v1/categories
   # POST /api/v1/categories.json
   def create
-    @api_v1_category = Category.new(api_v1_category_params.except(:images))
-    images = params[:category][:images]
-    if images.present?
-      images.each do |image|
-        @api_v1_category.images.attach(image)
-      end
-    end
+    @api_v1_category = Category.new(api_v1_category_params)
+
 
     if @api_v1_category.save
       @categories = Category.all
+      if @categories.present?
+        categories_with_images = @categories.map do |category|
+          {
+            id: category.id,
+            name: category.name,
+            user_management_id: category.user_management_id,
+            icon: category.icon.attached? ? url_for(category.icon) : nil
+          }
+        end
+      end
+      
       render json: { success: true, categories: @categories }
     else
       render json: @api_v1_category.errors, status: :unprocessable_entity
