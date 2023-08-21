@@ -7,7 +7,12 @@ class Api::V1::CategoriesController < ApplicationController
     begin
       @api_v1_categories = Category.all
       if @api_v1_categories.present?
-        render json: { success: true, categories: @api_v1_categories }
+        render json: { success: true, categories: @api_v1_categories.as_json(include: :images).merge(
+          images: @api_v1_categories.images.map do |image|
+            url_for(image)
+          end
+        )
+       }
       else
         render json: { success: false, error: "No categories found." }
       end
@@ -78,6 +83,6 @@ class Api::V1::CategoriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def api_v1_category_params
-      params.require(:category).permit(:name, :icon, :user_management_id)
+      params.require(:category).permit(:name, :icon, :user_management_id, images: [])
     end
 end
