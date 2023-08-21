@@ -7,12 +7,16 @@ class Api::V1::CategoriesController < ApplicationController
     begin
       @api_v1_categories = Category.all
       if @api_v1_categories.present?
-        render json: { success: true, categories: @api_v1_categories.as_json(include: :images).merge(
-          images: @api_v1_categories.images.map do |image|
-            url_for(image)
-          end
-        )
-       }
+        categories_with_images = @api_v1_categories.map do |category|
+          {
+            id: category.id,
+            name: category.name,
+            user_management_id: category.user_management_id,
+            images: category.images.map { |image| url_for(image) }
+          }
+        end
+
+        render json: { success: true, categories: categories_with_images }
       else
         render json: { success: false, error: "No categories found." }
       end
@@ -20,6 +24,7 @@ class Api::V1::CategoriesController < ApplicationController
       render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
   end
+
 
   # GET /api/v1/categories/1
   # GET /api/v1/categories/1.json
