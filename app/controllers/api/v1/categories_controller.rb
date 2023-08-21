@@ -4,32 +4,28 @@ class Api::V1::CategoriesController < ApplicationController
    # GET /api/v1/categories
   # GET /api/v1/categories.json
   def index
-    @categories = Category.all 
-    render json: CategoriesRepresenter.new(@categories).as_json
-  end
-  # def index
-  #   begin
-  #     @api_v1_categories = Category.all
-  #     if @api_v1_categories.present?
-  #       categories_with_images = @api_v1_categories.map do |category|
-  #         {
-  #           id: category.id,
-  #           name: category.name,
-  #           user_management_id: category.user_management_id,
-  #           images: category.images.map |image| do 
-  #             url_for(image)
-  #           end
-  #         }
-  #       end
+    begin
+      @api_v1_categories = Category.all
+      if @api_v1_categories.present?
+        categories_with_images = @api_v1_categories.map do |category|
+          {
+            id: category.id,
+            name: category.name,
+            user_management_id: category.user_management_id,
+            images: category.images.map |image| do 
+              url_for(image)
+            end
+          }
+        end
 
-  #       render json: { success: true, categories: categories_with_images }
-  #     else
-  #       render json: { success: false, error: "No categories found." }
-  #     end
-  #   rescue => e
-  #     render json: { code: 201, error: e.message }, status: :unprocessable_entity
-  #   end
-  # end
+        render json: { success: true, categories: categories_with_images }
+      else
+        render json: { success: false, error: "No categories found." }
+      end
+    rescue => e
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
+    end
+  end
 
 
   # GET /api/v1/categories/1
