@@ -17,4 +17,5 @@ Rails.application.routes.draw do
     end
   end
   root "arrivals#index"
+  rails_blob_path
 end

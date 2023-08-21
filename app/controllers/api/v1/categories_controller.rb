@@ -12,7 +12,9 @@ class Api::V1::CategoriesController < ApplicationController
             id: category.id,
             name: category.name,
             user_management_id: category.user_management_id,
-            images: category.images.map { |image| url_for(image) }
+            images: category.images.map |image| do 
+              url_for(image)
+            end
           }
         end
 
