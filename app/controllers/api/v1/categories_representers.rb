@@ -1,4 +1,4 @@
-class CategoriesRepresenter
+class  Api::V1::CategoriesRepresenters
     def initialize(categories)
       @categories = categories
     end
