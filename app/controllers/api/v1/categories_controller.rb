@@ -50,6 +50,7 @@ class Api::V1::CategoriesController < ApplicationController
         render json: { success: true, categories: serial_categories }
       else
         render json: { success: false, error: "No categories found." }
+      end
     else
       render json: @api_v1_category.errors, status: :unprocessable_entity
     end
