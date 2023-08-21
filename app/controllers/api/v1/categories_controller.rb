@@ -7,14 +7,7 @@ class Api::V1::CategoriesController < ApplicationController
     begin
       @api_v1_categories = Category.all
       if @api_v1_categories.present?
-        categories_with_images = @api_v1_categories.map do |category|
-          {
-            id: category.id,
-            name: category.name,
-            user_management_id: category.user_management_id,
-            icon: category.icon.attached? ? url_for(category.icon) : nil
-          }
-        end
+        categories_with_images = CategorySerializer.new(@api_v1_categories).serializable_hash[:data][:attributes]
 
         render json: { success: true, categories: categories_with_images }
       else
@@ -51,7 +44,6 @@ class Api::V1::CategoriesController < ApplicationController
   def create
     @api_v1_category = Category.new(api_v1_category_params)
 
-
     if @api_v1_category.save
       @categories = Category.all
       if @categories.present?
@@ -64,7 +56,7 @@ class Api::V1::CategoriesController < ApplicationController
           }
         end
       end
-      
+
       render json: { success: true, categories: @categories }
     else
       render json: @api_v1_category.errors, status: :unprocessable_entity
