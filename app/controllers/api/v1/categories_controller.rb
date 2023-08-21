@@ -45,7 +45,13 @@ class Api::V1::CategoriesController < ApplicationController
   # POST /api/v1/categories
   # POST /api/v1/categories.json
   def create
-    @api_v1_category = Category.new(api_v1_category_params)
+    @api_v1_category = Category.new(api_v1_category_params.except(:images))
+    images = params[:category][:images]
+    if images.present?
+      images.each do |image|
+        @api_v1_category.images.attach(image)
+      end
+    end
 
     if @api_v1_category.save
       @categories = Category.all
