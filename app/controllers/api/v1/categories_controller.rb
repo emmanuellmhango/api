@@ -7,9 +7,7 @@ class Api::V1::CategoriesController < ApplicationController
     begin
       @api_v1_categories = Category.all
       if @api_v1_categories.present?
-        categories_with_images = CategorySerializer.new(@api_v1_categories).serializable_hash[:data][:attributes]
-
-        render json: { success: true, categories: categories_with_images }
+        render json: { success: true, categories: CategorySerializer.new(@api_v1_categories).serializable_hash[:data][:attributes] }
       else
         render json: { success: false, error: "No categories found." }
       end
