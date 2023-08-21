@@ -1,7 +1,7 @@
 class Api::V1::CategoriesController < ApplicationController
   before_action :set_api_v1_category, only: %i[ show update destroy ]
 
-   # GET /api/v1/categories
+  # GET /api/v1/categories
   # GET /api/v1/categories.json
   def index
     begin
@@ -12,9 +12,7 @@ class Api::V1::CategoriesController < ApplicationController
             id: category.id,
             name: category.name,
             user_management_id: category.user_management_id,
-            images: category.images.map |image| do 
-              url_for(image)
-            end
+            icon_url: category.icon.attached? ? url_for(category.icon) : nil
           }
         end
 
@@ -26,7 +24,6 @@ class Api::V1::CategoriesController < ApplicationController
       render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
   end
-
 
   # GET /api/v1/categories/1
   # GET /api/v1/categories/1.json
