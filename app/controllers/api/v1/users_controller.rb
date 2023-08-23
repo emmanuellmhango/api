@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_api_v1_user, only: %i[ show update destroy ], except: [:forgot_password]
+  before_action :set_api_v1_user, only: %i[ show update destroy ]
 
   # GET /api/v1/users
   # GET /api/v1/users.json
@@ -100,7 +100,9 @@ class Api::V1::UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_api_v1_user
-      @api_v1_user = User.find(params[:id])
+      if params[:id] != "forgot-password"
+        @api_v1_user = User.find(params[:id])
+      end
     end
 
     # Only allow a list of trusted parameters through.
