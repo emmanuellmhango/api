@@ -20,6 +20,7 @@ class Api::V1::UsersController < ApplicationController
   def forgot_password
     begin
       pass_user = User.find_by(email: params[:email])
+      
       if pass_user.present?
         render json: { success: true, user: pass_user }
       else
@@ -100,9 +101,7 @@ class Api::V1::UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_api_v1_user
-      if params[:id] != "forgot-password"
-        @api_v1_user = User.find(params[:id])
-      end
+      @api_v1_user = User.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
