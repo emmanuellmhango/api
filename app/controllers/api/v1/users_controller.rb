@@ -1,11 +1,25 @@
 class Api::V1::UsersController < ApplicationController
   before_action :set_api_v1_user, only: %i[ show update destroy ]
 
-    # GET /api/v1/users
+  # GET /api/v1/users
   # GET /api/v1/users.json
   def index
     begin
       @api_v1_user = User.find_by(email: params[:email], password: params[:password])
+      if @api_v1_user.present?
+        render json: { success: true, user: @api_v1_user }
+      else
+        render json: { success: false, error: "User not found." }
+      end
+    rescue StandardError => e
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
+    end
+  end  
+  
+  # GET /api/v1/forgot-password
+  def forgot_password
+    begin
+      @api_v1_user = User.find_by(email: params[:email])
       if @api_v1_user.present?
         render json: { success: true, user: @api_v1_user }
       else

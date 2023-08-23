@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get '/claims_for_mobile', to: 'claims#index_for_mobile'
       get '/system_users', to: 'users#system_users'
       get '/category_client_email', to: 'categories#category_client_email'
+      get '/forgot-password', to: 'users#forgot_password'
       resources :users
       resources :clients
     end
