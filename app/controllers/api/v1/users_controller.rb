@@ -19,9 +19,9 @@ class Api::V1::UsersController < ApplicationController
   # GET /api/v1/forgot-password
   def forgot_password
     begin
-      @api_v1_user = User.find_by(email: params[:email])
-      if @api_v1_user.present?
-        render json: { success: true, user: @api_v1_user }
+      pass_user = User.find_by(email: params[:email])
+      if pass_user.present?
+        render json: { success: true, user: pass_user }
       else
         render json: { success: false, error: "User not found." }
       end
