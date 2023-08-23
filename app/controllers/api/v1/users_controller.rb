@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_api_v1_user, only: %i[ show update destroy ]
+  before_action :set_api_v1_user, only: %i[ show update destroy ], except: [:forgot_password]
 
   # GET /api/v1/users
   # GET /api/v1/users.json
