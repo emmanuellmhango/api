@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       get '/category_client_email', to: 'categories#category_client_email'
       get '/forgot-password', to: 'users#forgot_password'
       get '/claims-by-categories', to: 'users#claims_group_by_category_id'
+      get '/claims-in-progress', to: 'users#claims_group_by_tags_in_progress'
+      get '/claims-fixed', to: 'users#claims_group_by_tags_fixed'
       resources :claims
       resources :categories
       resources :user_managements

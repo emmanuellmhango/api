@@ -42,7 +42,32 @@ class Api::V1::ClaimsController < ApplicationController
     end
 
     render json: {claims: result}
+  end  
+  
+  # GET /api/v1/claims_group_by_tags_in_progress
+  def claims_group_by_tags_in_progress
+    claims = Claim.where(forwarded: 'false')  # Filter claims where forwarded is false
+    grouped_claims = claims.group_by(&:category_id)
+    result = {}
+    grouped_claims.each do |category_id, claims|
+      result[category_id] = claims.count
+    end
+
+    render json: { claims: result }
+  end  
+  
+  # GET /api/v1/claims_group_by_tags_fixed
+  def claims_group_by_tags_fixed
+    claims = Claim.where(fixed: false)  # Filter claims where forwarded is false
+    grouped_claims = claims.group_by(&:category_id)
+    result = {}
+    grouped_claims.each do |category_id, claims|
+      result[category_id] = claims.count
+    end
+
+    render json: { claims: result }
   end
+
   
   # GET /api/v1/claims_for_mobile Individual results for the user
   def index_for_mobile
