@@ -1,11 +1,4 @@
 Rails.application.routes.draw do
-  namespace :api do
-    namespace :v1 do
-      resources :claims
-      resources :categories
-      resources :user_managements
-    end
-  end
   namespace :api, defaults: { format: 'json' } do
     namespace :v1 do
       get '/all_users', to: 'users#get_all_users'
@@ -13,6 +6,10 @@ Rails.application.routes.draw do
       get '/system_users', to: 'users#system_users'
       get '/category_client_email', to: 'categories#category_client_email'
       get '/forgot-password', to: 'users#forgot_password'
+      get '/claims-by-categories', to: 'users#claims_group_by_category_id'
+      resources :claims
+      resources :categories
+      resources :user_managements
       resources :users
       resources :clients
     end

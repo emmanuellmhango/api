@@ -31,6 +31,18 @@ class Api::V1::ClaimsController < ApplicationController
       render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
   end
+
+  # GET /api/v1/claims_group_by_category_id
+  def claims_group_by_category_id
+    claims = Claim.all
+    grouped_claims = claims.group_by(&:category_id)
+    result = {}
+    grouped_claims.each do |category_id, claims|
+      result[category_id] = claims.count
+    end
+
+    render json: {claims: result}
+  end
   
   # GET /api/v1/claims_for_mobile Individual results for the user
   def index_for_mobile
