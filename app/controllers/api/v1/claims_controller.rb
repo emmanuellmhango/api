@@ -107,16 +107,7 @@ class Api::V1::ClaimsController < ApplicationController
   # POST /api/v1/claims
   # POST /api/v1/claims.json
   def create
-    @api_v1_claim = Claim.new(api_v1_claim_params.except(:images))
-
-    images = params[:claim][:images]
-
-    if images
-      images.each do |image|
-        @api_v1_claim.images.attach(image)
-      end
-    end
-
+    @api_v1_claim = Claim.new(api_v1_claim_params)
     if @api_v1_claim.save
       render json: { success: true }
     else
