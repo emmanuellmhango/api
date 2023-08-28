@@ -151,4 +151,5 @@ class Api::V1::ClaimsController < ApplicationController
     def api_v1_claim_params
       params.require(:claim).permit(:comment, :location, :forwarded, :user_id, :category_id, :geocode, images: [])
     end
+
 end

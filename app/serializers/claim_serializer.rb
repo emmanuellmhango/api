@@ -1,14 +1,4 @@
-class ClaimSerializer < ActiveModel::Serializer
+class ClaimSerializer
   include JSONAPI::Serializer
-  attributes :id, :location, :comment, :forwarded, :category_id, :user_id, :created_at, :images, :image_urls
-
-  belongs_to :user, serializer: UserSerializer
-
-  def image_urls
-    if object.images.attached?
-      object.images.map { |image| url_for(image) }
-    else
-      []
-    end
-  end
+  attributes :comment, :location, :forwarded, :user_id, :category_id, :geocode, :images, :created_at
 end
