@@ -129,7 +129,11 @@ class Api::V1::ClaimsController < ApplicationController
   # DELETE /api/v1/claims/1
   # DELETE /api/v1/claims/1.json
   def destroy
-    @api_v1_claim.destroy
+    if @api_v1_claim.destroy
+      render json: { success: true }
+    else
+      render json: { success: false }
+    end
   end
 
   private
