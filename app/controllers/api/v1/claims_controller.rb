@@ -34,38 +34,60 @@ class Api::V1::ClaimsController < ApplicationController
 
   # GET /api/v1/claims_group_by_category_id
   def claims_group_by_category_id
-    claims = Claim.all
-    grouped_claims = claims.group_by(&:category_id)
-    result = {}
-    grouped_claims.each do |category_id, claims|
-      result[category_id] = claims.count
+    begin
+      claims = Claim.all
+      if claims.present?
+        grouped_claims = claims.group_by(&:category_id)
+        result = {}
+        grouped_claims.each do |category_id, claims|
+          result[category_id] = claims.count
+        end
+        render json: {success: true, claims: result}
+      else
+        render json: { success: false, error: "No claims found" }
+      end
+    rescue StandardError => e
+      render json: { code: 201, error: e.message }, status: :unprocessable_entity
     end
-
-    render json: {claims: result}
   end  
   
   # GET /api/v1/claims_group_by_tags_in_progress
   def claims_group_by_tags_in_progress
-    claims = Claim.where(forwarded: 'false')  # Filter claims where forwarded is false
-    grouped_claims = claims.group_by(&:category_id)
-    result = {}
-    grouped_claims.each do |category_id, claims|
-      result[category_id] = claims.count
+    begin
+      claims = Claim.where(forwarded: 'false')
+      if claims.present?
+        grouped_claims = claims.group_by(&:category_id)
+        result = {}
+        grouped_claims.each do |category_id, claims|
+          result[category_id] = claims.count
+        end
+        render json: { claims: result }
+      else
+        render json: { success: false, error: "No claims found" }
+      end
+    rescue => exception
+      render json: { code: 201, error: exception.message }, status: :unprocessable_entity
     end
-
-    render json: { claims: result }
   end  
   
   # GET /api/v1/claims_group_by_tags_fixed
   def claims_group_by_tags_fixed
-    claims = Claim.where(fixed: false)  # Filter claims where forwarded is false
-    grouped_claims = claims.group_by(&:category_id)
-    result = {}
-    grouped_claims.each do |category_id, claims|
-      result[category_id] = claims.count
-    end
+    begin
+      claims = Claim.where(fixed: false)
+      if claims.present?
+        grouped_claims = claims.group_by(&:category_id)
+        result = {}
+        grouped_claims.each do |category_id, claims|
+          result[category_id] = claims.count
+        end
 
-    render json: { claims: result }
+        render json: { claims: result }
+      else
+        render json: { success: false, error: "No claims found" }
+      end
+    rescue => exception
+      render json: { code: 201, error: exception.message }, status: :unprocessable_entity
+    end
   end
 
   
