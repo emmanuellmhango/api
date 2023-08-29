@@ -32,7 +32,7 @@ class Api::V1::ClaimsController < ApplicationController
     end
   end
 
-  # GET /api/v1/claims_group_by_category_id
+  # GET /api/v1/claims-by-categories
   def claims_group_by_category_id
     begin
       claims = Claim.all
@@ -51,7 +51,7 @@ class Api::V1::ClaimsController < ApplicationController
     end
   end  
   
-  # GET /api/v1/claims_group_by_tags_in_progress
+  # GET /api/v1/claims-in-progress
   def claims_group_by_tags_in_progress
     begin
       claims = Claim.where(forwarded: 'false')
@@ -61,7 +61,7 @@ class Api::V1::ClaimsController < ApplicationController
         grouped_claims.each do |category_id, claims|
           result[category_id] = claims.count
         end
-        render json: { claims: result }
+        render json: {success: true, claims: result}
       else
         render json: { success: false, error: "No claims found" }
       end
@@ -70,7 +70,7 @@ class Api::V1::ClaimsController < ApplicationController
     end
   end  
   
-  # GET /api/v1/claims_group_by_tags_fixed
+  # GET /api/v1/claims-fixed
   def claims_group_by_tags_fixed
     begin
       claims = Claim.where(fixed: false)
@@ -81,7 +81,7 @@ class Api::V1::ClaimsController < ApplicationController
           result[category_id] = claims.count
         end
 
-        render json: { claims: result }
+        render json: {success: true, claims: result}
       else
         render json: { success: false, error: "No claims found" }
       end
