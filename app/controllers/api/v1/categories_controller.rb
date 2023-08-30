@@ -8,7 +8,7 @@ class Api::V1::CategoriesController < ApplicationController
       @api_v1_categories = Category.all
       if @api_v1_categories.present?
         serialized_categories = CategorySerializer.new(@api_v1_categories).serializable_hash[:data].map { |item| item[:attributes] }
-        render json: { success: true, categories: serialized_categories }, status: :ok
+        render json:  success: true, categories: serialized_categories, status: :ok
       else
         render json: { success: false, error: "No categories found." }
       end
