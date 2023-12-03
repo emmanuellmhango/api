@@ -19,5 +19,5 @@ It can handle the following:
 
 ### User Login
 -the endpoint accepts the following for login
- `` email
+ `` email,
   password``
