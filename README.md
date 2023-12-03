@@ -1,24 +1,9 @@
-# README
+# ECOMMERCE WEBSITE DEVELOPMENT ASSIGNMENT API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the API for user management for the E-commerce frontend website.
+It can handle the following:
+-User Registration
+-User Authentication
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## END POINTS
+`https://api-web-service-g48n.onrender.com/api/v1/users`
