@@ -7,3 +7,17 @@ It can handle the following:
 
 ## END POINTS
 `https://api-web-service-g48n.onrender.com/api/v1/users`
+
+### User Registration
+-the endpoint accepts the following data for registration:
+ `` name
+  email
+  password
+  phone
+  dob
+  signin_by``
+
+### User Login
+-the endpoint accepts the following for login
+ `` email
+  password``
