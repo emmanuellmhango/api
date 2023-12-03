@@ -10,12 +10,12 @@ It can handle the following:
 
 ### User Registration
 -the endpoint accepts the following data for registration:
- `` name
-  email
-  password
-  phone
-  dob
-  signin_by``
+ `` name,
+  email,
+  password,
+  phone,
+  dob  (use "--" as the default value),
+  signin_by (use "form" as the default value)``
 
 ### User Login
 -the endpoint accepts the following for login
